@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Face Recognition</title>
+	<link async href="http://fonts.googleapis.com/css?family=Warnes" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			align-content: center;
+		}
+		body{
+			background-color: black;
+
+		}
+		.resultPhoto{
+			box-shadow: 3px 3px 5px white;
+			border: 2px 2px solid whitesmoke;
+			position: absolute;
+			left: 50%;
+			top: 11%;
+			width: 100px;
+			height: 100px;
+		}
+	.header{
+		text-align: center;
+			color: white;
+			text-shadow: 5px 5px 5px grey;
+			font-size: 4rem;
+			font-family: 'Black Ops One', cursive;
+
+	}
+	.canvas{
+			border-radius: 20px;
+			transform: rotateY(180deg);
+			-webkit-transform:rotateY(180deg); /* Safari and Chrome */
+			-moz-transform:rotateY(180deg);	
+	}
+	.vedio{
+		box-shadow: 10px 10px 10px grey;
+		border: 2px 2px solid whitesmoke;
+		position: absolute;
+		left: 5%;
+		top: 11%;
+		border-radius: 20px;
+		transform: rotateY(180deg);
+		-webkit-transform:rotateY(180deg); /* Safari and Chrome */
+   	   -moz-transform:rotateY(180deg);	
+	}
+	 .result{
+			position: absolute;
+			left: 50%;
+			text-shadow: 5px 5px 5px grey;
+			top: 25%;
+			width: 800px;
+			height: 100px;
+			font-size: 1.5rem;
+			color: white;
+			font-family: 'Black Ops One', cursive;
+	}
+	.button {
+  box-sizing: border-box;
+  width: 128px;
+  position: absolute;
+  height: 128px;
+  cursor: pointer;
+  top: 70%;
+  left: 30%;
+  border: 1px solid #B21522;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+  font: normal 20px/1.1 "Black Ops One", Helvetica, sans-serif;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  white-space: pre;
+  background: -webkit-radial-gradient(closest-side, rgba(255,255,255,0.2) 0, rgba(0,0,0,0) 100%), #C91826;
+  background: -moz-radial-gradient(closest-side, rgba(255,255,255,0.2) 0, rgba(0,0,0,0) 100%), #C91826;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.2) 0, rgba(0,0,0,0) 100%), #C91826;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: 158px 142px;
+  background-size: 158px 142px;
+  -webkit-box-shadow: 1px 16px 10px 5px rgba(0,0,0,0.2) , 0 14px 0 0 #fff , 4px 8px 15px 4px rgba(0,0,0,0.4) , 5px 1px 5px 0 rgba(255,255,255,0.2) inset, 5px -4px 5px 0 rgba(255,255,255,0.2) inset, -2px 3px 6px 0 rgba(0,0,0,0.2) inset;
+  box-shadow: 1px 16px 10px 5px rgba(0,0,0,0.2) , 0 14px 0 0 #fff , 4px 8px 15px 4px rgba(0,0,0,0.4) , 5px 1px 5px 0 rgba(255,255,255,0.2) inset, 5px -4px 5px 0 rgba(255,255,255,0.2) inset, -2px 3px 6px 0 rgba(0,0,0,0.2) inset;
+  text-shadow: 0 -1px 0 rgba(40,40,40,0.6) ;
+  -webkit-transition: all 40ms cubic-bezier(0.6, -0.28, 0.735, 0.04);
+  -moz-transition: all 40ms cubic-bezier(0.6, -0.28, 0.735, 0.04);
+  -o-transition: all 40ms cubic-bezier(0.6, -0.28, 0.735, 0.04);
+  transition: all 40ms cubic-bezier(0.6, -0.28, 0.735, 0.04);
+  -webkit-transform: rotateX(35deg)  translateY(15px) translateZ(40px) ;
+  transform: rotateX(35deg)  translateY(15px) translateZ(40px) ;
+}
+
+.button:hover {
+  background: -webkit-radial-gradient(closest-side, rgba(255,255,255,0.28) 0, rgba(0,0,0,0) 100%), #a80008;
+  background: -moz-radial-gradient(closest-side, rgba(255,255,255,0.28) 0, rgba(0,0,0,0) 100%), #a80008;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.28) 0, rgba(0,0,0,0) 100%), #a80008;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: 158px 142px;
+  background-size: 158px 142px;
+  -webkit-box-shadow: 1px 16px 10px 5px rgba(0,0,0,0.2) , 0 14px 0 0 #fff , 4px 8px 15px 4px rgba(0,0,0,0.4) , 5px 1px 5px 0 rgba(255,255,255,0.2) inset, 5px -4px 5px 0 rgba(255,255,255,0.2) inset, -2px 2px 6px 0 rgba(0,0,0,0.2) inset;
+  box-shadow: 1px 16px 10px 5px rgba(0,0,0,0.2) , 0 14px 0 0 #fff , 4px 8px 15px 4px rgba(0,0,0,0.4) , 5px 1px 5px 0 rgba(255,255,255,0.2) inset, 5px -4px 5px 0 rgba(255,255,255,0.2) inset, -2px 2px 6px 0 rgba(0,0,0,0.2) inset;
+  -webkit-transition: all 0 cubic-bezier(0.42, 0, 0.58, 1);
+  -moz-transition: all 0 cubic-bezier(0.42, 0, 0.58, 1);
+  -o-transition: all 0 cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 0 cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.button:active {
+  position: absolute;
+  cursor: default;
+  top: 70%;
+  left: 30%;
+  background: -webkit-radial-gradient(closest-side, rgba(255,255,255,0.2) 0, rgba(0,0,0,0) 100%), #c60009;
+  background: -moz-radial-gradient(closest-side, rgba(255,255,255,0.2) 0, rgba(0,0,0,0) 100%), #c60009;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.2) 0, rgba(0,0,0,0) 100%), #c60009;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  -webkit-background-origin: padding-box;
+  background-origin: padding-box;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-background-size: 158px 142px;
+  background-size: 158px 142px;
+  -webkit-box-shadow: 1px 5px 8px 4px rgba(0,0,0,0.4) , 0 7px 0 0 #fff , 1px 2px 1px 1px rgba(0,0,0,0.6) , 3px 1px 5px 0 rgba(255,255,255,0.2) inset, 3px -6px 5px 0 rgba(255,255,255,0.2) inset, -1px 1px 4px 0 rgba(0,0,0,0.2) inset;
+  box-shadow: 1px 5px 8px 4px rgba(0,0,0,0.4) , 0 7px 0 0 #fff , 1px 2px 1px 1px rgba(0,0,0,0.6) , 3px 1px 5px 0 rgba(255,255,255,0.2) inset, 3px -6px 5px 0 rgba(255,255,255,0.2) inset, -1px 1px 4px 0 rgba(0,0,0,0.2) inset;
+  -webkit-transition: all 40ms cubic-bezier(0.42, 0, 0.58, 1);
+  -moz-transition: all 40ms cubic-bezier(0.42, 0, 0.58, 1);
+  -o-transition: all 40ms cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 40ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+.screenshotButton {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin: 0 0 15px;
+  position: absolute;
+  top: 75%;
+  left: 10%;
+  padding: 8px 20px 10px;
+  border: 1px solid rgb(31,45,77);
+  border-top-color: rgb(56,83,140);
+  border-bottom-color: rgb(21,30,51);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  font: normal normal bold 14px/1 "Coda", Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: rgb(65, 98, 168);
+  -webkit-box-shadow: 0 1px 10px 1px rgb(92,139,238) inset, 0 1px 0 0 rgb(29,44,77) , 0 6px 0 0 rgb(31,48,83) , 0 8px 4px 1px rgb(17,17,17) ;
+  box-shadow: 0 1px 10px 1px rgb(92,139,238) inset, 0 1px 0 0 rgb(29,44,77) , 0 6px 0 0 rgb(31,48,83) , 0 8px 4px 1px rgb(17,17,17) ;
+  text-shadow: 0 -1px 1px rgb(30,45,77) ;
+}
+
+.screenshotButton:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 20px 1px rgb(135,173,255) inset, 0 1px 0 0 rgb(29,44,77) , 0 6px 0 0 rgb(31,48,83) , 0 8px 4px 1px rgb(17,17,17) ;
+  box-shadow: 0 0 20px 1px rgb(135,173,255) inset, 0 1px 0 0 rgb(29,44,77) , 0 6px 0 0 rgb(31,48,83) , 0 8px 4px 1px rgb(17,17,17) ;
+}
+
+.screenshotButton:active {
+  margin: 5px 0 10px;
+  -webkit-box-shadow: 0 1px 10px 1px rgb(92,139,238) inset, 0 1px 0 0 rgb(29,44,77) , 0 2px 0 0 rgb(31,48,83) , 0 4px 3px 0 rgb(17,17,17) ;
+  box-shadow: 0 1px 10px 1px rgb(92,139,238) inset, 0 1px 0 0 rgb(29,44,77) , 0 2px 0 0 rgb(31,48,83) , 0 4px 3px 0 rgb(17,17,17) ;
+
+
+}
+
+#reportTable{
+
+		position: absolute;
+		top: 400px;
+		left: 950px;
+}
+
+
+	</style>
+
+<script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+</head>
+<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyDIIRQQP58IQ1OZlBlncu3LC3xNhiCsmeA",
+			authDomain: "child-labour-sih.firebaseapp.com",
+			databaseURL: "https://child-labour-sih.firebaseio.com",
+			projectId: "child-labour-sih",
+			storageBucket: "child-labour-sih.appspot.com",
+			messagingSenderId: "320379268024"
+		};
+		firebase.initializeApp(config);
+	
+		const db = firebase.firestore();
+	
+	</script>
+<body>
+
+    <h1 class="header"> <u> &lt; Authentication &#47; &gt; </u></h1>
+    <form action = "http://localhost:5000/" method = "POST">
+		<p><video class="vedio" id="video" autoplay="autoplay"></video></p>
+		<input class="screenshotButton" type="button" id="buttonSnap" value="Take Screenshot"  onclick="snapshot()" />
+		<input class="button" id="submitButtton" type = "submit" value = "Submit" disabled onclick="submit()" />
+        <p><input type='text' id='dataURL' name = "dataURL" hidden></p>
+       <div class="resultPhoto" id="resultPhoto" hidden> <canvas id="canvas" class="canvas"></canvas></div>
+    </form>
+	<div class="result" id="table">
+	{% if result %}
+	
+	<h1>Name         :   {{ result['Name'] }}</h1>
+	<h2 class="userIDDisplay">Entry Number :   {{ result['Entry Number'] }}</h2>
+	<!-- <h1 style="margin-top: 50px; text-decoration: underline;">{{ result['Auth']}}</h1> -->
+	<Button id="profileButton" class="btn btn-success" onclick="profileDispay()">Check Profile</Button>
+	
+	{% endif  %}
+
+
+	</div>
+
+	<div id="reportTable" >
+							<span style="color:aliceblue ; font-size: 20px;" id="title" ></span><br>
+							<span id="reportDetails" style="color:yellow "></span>
+	</div>
+	
+    <script>
+
+
+    "use strict";
+var video = document.getElementById('video');
+var canvas = document.getElementById('canvas');
+var videoStream = null;
+var preLog = document.getElementById('preLog');
+var dataURL = "";
+
+var userID;
+
+function log(text)
+{
+	if (preLog) preLog.textContent += ('\n' + text);
+	else alert(text);
+}
+
+function snapshot()
+{
+	document.getElementById('submitButtton').disabled = false
+	document.getElementById('table').hidden =  true
+	document.getElementById('resultPhoto').hidden = false
+	canvas.width = video.videoWidth;
+	canvas.height = video.videoHeight;
+	canvas.getContext('2d').drawImage(video, 0, 0);
+    dataURL = canvas.toDataURL();
+    // console.log(dataURL);
+    document.getElementById('dataURL').value = dataURL;
+
+	document.getElementById('dataURL').hidden=true;
+	
+    // console.log(document.getElementById('dataURL').value)
+    
+}
+
+function noStream()
+{
+	log('Access to camera was denied!');
+}
+
+
+
+function gotStream(stream)
+{
+	var myButton = document.getElementById('buttonStart');
+	if (myButton) myButton.disabled = true;
+	videoStream = stream;
+	// log('Got stream.');
+	video.onerror = function ()
+	{
+		log('video.onerror');
+		if (video) stop();
+	};
+	stream.onended = noStream;
+	if (window.webkitURL) video.srcObject=stream;
+	else if (video.mozSrcObject !== undefined)
+	{//FF18a
+		video.mozSrcObject = stream;
+		video.play();
+	}
+	else if (navigator.mozGetUserMedia)
+	{//FF16a, 17a
+		video.src = stream;
+		video.play();
+	}
+	else if (window.URL) video.src = window.URL.createObjectURL(stream);
+	else video.src = stream;
+	myButton = document.getElementById('buttonSnap');
+	if (myButton) myButton.disabled = false;
+	myButton = document.getElementById('buttonStop');
+	if (myButton) myButton.disabled = false;
+}
+
+// function submit(){
+
+// 	document.getElementsByClassName('result').hidden =  false
+// }
+
+function start()
+{
+	document.getElementById('video').hidden =false;
+	if ((typeof window === 'undefined') || (typeof navigator === 'undefined')) log('This page needs a Web browser with the objects window.* and navigator.*!');
+	else if (!(video && canvas)) log('HTML context error!');
+	else
+	{
+		// log('Get user media…');
+		if (navigator.getUserMedia) navigator.getUserMedia({video:true}, gotStream, noStream);
+		else if (navigator.oGetUserMedia) navigator.oGetUserMedia({video:true}, gotStream, noStream);
+		else if (navigator.mozGetUserMedia) navigator.mozGetUserMedia({video:true}, gotStream, noStream);
+		else if (navigator.webkitGetUserMedia) navigator.webkitGetUserMedia({video:true}, gotStream, noStream);
+		else if (navigator.msGetUserMedia) navigator.msGetUserMedia({video:true, audio:false}, gotStream, noStream);
+		else log('getUserMedia() not available from your Web browser!');
+	}
+}
+
+start();	
+
+
+function profileDispay(){
+
+
+	var h1Text = document.querySelector(".userIDDisplay").textContent;
+	var temp = h1Text.slice(15,28).toString();	
+
+	var temp2 =h1Text.split(" ",6);
+	// alert(temp2[5]);
+
+	var iitJammu = db.collection("iitjammu").doc(temp2[5]);
+		iitJammu.get().then(function(doc) {
+    if (doc.exists) {
+				// alert("ok");
+        // alert(doc.data().Report);
+				document.getElementById("title").innerHTML = "Report :------------->";
+				document.getElementById("reportDetails").innerHTML=doc.data().Report;
+
+
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+
+
+
+
+
+
+}
+
+	</script>
+	<!-- <script src="app.js"></script>
+	<script src="particles.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+</body>
+</html>

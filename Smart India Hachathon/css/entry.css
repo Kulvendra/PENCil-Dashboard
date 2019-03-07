@@ -1,0 +1,20 @@
+#profileBox{
+
+    /* display: flex; */
+    
+    /* width: 40%; */
+    
+
+}
+.container-fluid{
+
+    width: 50%;
+    /* position: relative;
+    left: -400px; */
+
+
+}
+
+#photoUploadBox progress{
+    background: black;
+}
